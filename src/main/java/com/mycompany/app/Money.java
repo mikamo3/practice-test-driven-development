@@ -1,20 +1,37 @@
 package com.mycompany.app;
 
-abstract class Money {
+class Money {
     protected int amount;
+    protected String currency;
 
-    abstract Money times(int multiplier);
+    Money(int amount, String currency) {
+
+        this.amount = amount;
+        this.currency = currency;
+    }
 
     public boolean equals(Object object) {
         Money money = (Money) object;
-        return amount == money.amount && this.getClass().equals(money.getClass());
+        return amount == money.amount && currency == money.currency;
     }
 
-    static Dollar dollar(int amount) {
-        return new Dollar(amount);
+    static Money dollar(int amount) {
+        return new Money(amount, "USD");
     }
 
-    static Franc franc(int amount) {
-        return new Franc(amount);
+    static Money franc(int amount) {
+        return new Money(amount, "CHF");
+    }
+
+    String currency() {
+        return currency;
+    }
+
+    public String toString() {
+        return amount + " " + currency;
+    }
+
+    Money times(int multiplier) {
+        return new Money(amount * multiplier, currency);
     }
 }
